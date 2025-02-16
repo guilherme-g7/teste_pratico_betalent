@@ -6,12 +6,12 @@ abstract class ApiClient{
     int? port,
     Dio Function()? clientFactory,
   }) : host = host ?? 'localhost',
-        port = port ?? 8080,
+        port = port ?? 3000,
         clientFactory = clientFactory ?? (() => Dio());
 
   final String host;
   final int port;
-  final Dio Function() clientFactory;
+  late final Dio Function() clientFactory;
 
 
   String get baseUrl => 'http://$host:$port';

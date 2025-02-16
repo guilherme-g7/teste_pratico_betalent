@@ -1,90 +1,84 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-
+import 'package:mockito/annotations.dart';
+import 'package:logging/logging.dart';
 import 'package:teste_pratico_betalent/data/services/employees_service.dart';
 import 'package:teste_pratico_betalent/domain/models/employees_model.dart';
+import 'package:teste_pratico_betalent/utils/exceptions.dart';
+import 'package:teste_pratico_betalent/utils/result.dart';
 
-class MockDioClient extends Mock implements Dio {}
+import 'employees_service_test.mocks.dart';
 
+
+@GenerateMocks([Dio])
 void main() {
   late EmployeesService employeesService;
-  late MockDioClient mockDio;
+  late MockDio mockDio;
 
   setUp(() {
-    mockDio = MockDioClient();
-    employeesService = EmployeesService();
+    mockDio = MockDio();
+    employeesService = EmployeesService(clientFactory: () => mockDio);
   });
 
   group('EmployeesService Tests', () {
-    test('Should return employees list on success', () async {
-      // Organizando: mockando a resposta do Dio para simular um sucesso
-      final response = {
-        "companies": [
-          {"id": 1, "name": "John Doe", "position": "Software Engineer"}
-        ]
-      };
+    test('should return a list of employees when the request is successful', () async {
+      final responsePayload =
+        [
+          {
+            "id": "1",
+            "name": "João",
+            "job": "Back-end",
+            "admission_date": "2019-12-02T00:00:00.000Z",
+            "phone": "5551234567890",
+            "image": "https://img.favpng.com/25/7/23/computer-icons-user-profile-avatar-image-png-favpng-LFqDyLRhe3PBXM0sx2LufsGFU.jpg"
+          }
+        ];
 
-      when(mockDio.get(any))
-          .thenAnswer((_) async => Response(
-        data: response,
+
+      when(mockDio.get(any)).thenAnswer((_) async => Response(
+        data: responsePayload,
         statusCode: 200,
         requestOptions: RequestOptions(path: ''),
       ));
 
       final result = await employeesService.getEmployess();
 
-      // Verificando que a resposta foi bem-sucedida
-      expect(result.isSuccess, true);
-      expect(result.value, isA<List<EmployeesModel>>());
-      expect(result.value!.length, 1);
-      expect(result.value![0].name, "John Doe");
+      expect(result, isA<Success<List<EmployeesModel>>>());
+      expect((result as Success<List<EmployeesModel>>).value.length, 1);
+      expect(result.value.first.name, "João");
     });
 
-    test('Should return error for 404 Not Found', () async {
-      // Organizando: mockando a resposta do Dio para simular um erro 404
-      when(mockDio.get(any))
-          .thenAnswer((_) async => Response(
-        data: "Employees not found",
-        statusCode: 404,
-        requestOptions: RequestOptions(path: ''),
-      ));
-
-      final result = await employeesService.getEmployess();
-
-      // Verificando que a resposta contém erro
-      expect(result.isError, true);
-      expect(result.error, isA<NotFoundException>());
-    });
-
-    test('Should return error for 500 Internal Server Error', () async {
-      // Organizando: mockando a resposta do Dio para simular um erro 500
-      when(mockDio.get(any))
-          .thenAnswer((_) async => Response(
-        data: "Internal Server Error",
-        statusCode: 500,
-        requestOptions: RequestOptions(path: ''),
-      ));
-
-      final result = await employeesService.getEmployess();
-
-      // Verificando que a resposta contém erro
-      expect(result.isError, true);
-      expect(result.error, isA<ServerException>());
-    });
-
-    test('Should return error for unknown exception', () async {
-      // Organizando: mockando uma exceção desconhecida
+    test('should return NotFoundException when API returns 404', () async {
       when(mockDio.get(any)).thenThrow(DioException(
+        response: Response(
+          statusCode: 404,
+          requestOptions: RequestOptions(path: ''),
+          data: 'Employees not found',
+        ),
         requestOptions: RequestOptions(path: ''),
-        error: 'Unknown error',
       ));
 
       final result = await employeesService.getEmployess();
 
-      // Verificando que a resposta contém erro
-      expect(result.isError, true);
-      expect(result.error, isA<UnknownException>());
+      expect(result, isA<Error>());
+      expect((result as Error).error, isA<NotFoundException>());
+    });
+
+    test('should return ServerException when API returns 500', () async {
+      when(mockDio.get(any)).thenThrow(DioException(
+        response: Response(
+          statusCode: 500,
+          requestOptions: RequestOptions(path: ''),
+          data: 'Internal Server Error',
+        ),
+        requestOptions: RequestOptions(path: ''),
+      ));
+
+      final result = await employeesService.getEmployess();
+
+      expect(result, isA<Error>());
+      expect((result as Error).error, isA<ServerException>());
     });
   });
 }

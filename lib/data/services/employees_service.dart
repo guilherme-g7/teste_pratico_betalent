@@ -10,6 +10,8 @@ import '../../utils/result.dart';
 class EmployeesService extends ApiClient{
   final _log = Logger('EmployeesService');
 
+  EmployeesService({super.host, super.port, super.clientFactory});
+
   Future<Result<List<EmployeesModel>>> getEmployess() async{
     final client = clientFactory();
     final url = '$baseUrl/employees';
@@ -17,7 +19,7 @@ class EmployeesService extends ApiClient{
     try{
       Response response = await client.get(url);
       if(response.statusCode == 200){
-        List<dynamic> json = response.data["companies"];
+        List<dynamic> json = response.data;
         final List<EmployeesModel> companies = json.map((e) => EmployeesModel.fromJson(e)).toList();
         return Result.success(companies);
       } else{

@@ -27,5 +27,4 @@ class EmployeesRepositoryImpl implements EmployeesRepository{
       return Result.error(e);
     }
   }
-
 }

@@ -4,9 +4,7 @@ sealed class Result<T> {
   const factory Result.success(T value) = Success._;
 
   const factory Result.error(Exception error) = Error._;
-
 }
-
 
 final class Success<T> extends Result<T> {
   const Success._(this.value);

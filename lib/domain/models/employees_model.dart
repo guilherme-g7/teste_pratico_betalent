@@ -1,5 +1,5 @@
 class EmployeesModel {
-  int? _id;
+  String? _id;
   String? _name;
   String? _job;
   String? _admissionDate;
@@ -7,7 +7,7 @@ class EmployeesModel {
   String? _image;
 
   EmployeesModel(
-      {int? id,
+      {String? id,
       String? name,
       String? job,
       String? admissionDate,
@@ -33,17 +33,28 @@ class EmployeesModel {
     }
   }
 
-  int? get id => _id;
-  set id(int? id) => _id = id;
+  String? get id => _id;
+
+  set id(String? id) => _id = id;
+
   String? get name => _name;
+
   set name(String? name) => _name = name;
+
   String? get job => _job;
+
   set job(String? job) => _job = job;
+
   String? get admissionDate => _admissionDate;
+
   set admissionDate(String? admissionDate) => _admissionDate = admissionDate;
+
   String? get phone => _phone;
+
   set phone(String? phone) => _phone = phone;
+
   String? get image => _image;
+
   set image(String? image) => _image = image;
 
   EmployeesModel.fromJson(Map<String, dynamic> json) {
