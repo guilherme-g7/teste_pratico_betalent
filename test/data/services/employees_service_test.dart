@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:logging/logging.dart';
 import 'package:teste_pratico_betalent/data/services/employees_service.dart';
-import 'package:teste_pratico_betalent/domain/models/employees_model.dart';
+import 'package:teste_pratico_betalent/domain/models/employee_model.dart';
 import 'package:teste_pratico_betalent/utils/exceptions.dart';
 import 'package:teste_pratico_betalent/utils/result.dart';
 
@@ -44,8 +44,8 @@ void main() {
 
       final result = await employeesService.getEmployess();
 
-      expect(result, isA<Success<List<EmployeesModel>>>());
-      expect((result as Success<List<EmployeesModel>>).value.length, 1);
+      expect(result, isA<Success<List<EmployeeModel>>>());
+      expect((result as Success<List<EmployeeModel>>).value.length, 1);
       expect(result.value.first.name, "João");
     });
 

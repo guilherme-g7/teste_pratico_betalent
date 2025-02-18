@@ -16,6 +16,7 @@ dependencies:
   provider: ^6.1.2
   logging: ^1.3.0
   dio: ^5.8.0+1
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -30,29 +31,15 @@ flutter:
   assets:
     - assets/images/
     - assets/images/betalent_img.svg
+    - assets/images/splash.png
+    - assets/images/screen.png
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
+  fonts:
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/helvetica.ttf
+        - asset: assets/fonts/helvetica-medium.otf
+        - asset: assets/fonts/helvetica-bold.ttf
+        - asset: assets/fonts/helvetica-light.ttf
+          weight: 500
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package

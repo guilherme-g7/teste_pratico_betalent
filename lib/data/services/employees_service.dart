@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';
 
-import '../../domain/models/employees_model.dart';
+import '../../domain/models/employee_model.dart';
 import '../../utils/api_client.dart';
 import '../../utils/exceptions.dart';
 import '../../utils/result.dart';
@@ -12,7 +12,7 @@ class EmployeesService extends ApiClient{
 
   EmployeesService({super.host, super.port, super.clientFactory});
 
-  Future<Result<List<EmployeesModel>>> getEmployess() async{
+  Future<Result<List<EmployeeModel>>> getEmployess() async{
     final client = clientFactory();
     final url = '$baseUrl/employees';
 
@@ -20,7 +20,7 @@ class EmployeesService extends ApiClient{
       Response response = await client.get(url);
       if(response.statusCode == 200){
         List<dynamic> json = response.data;
-        final List<EmployeesModel> companies = json.map((e) => EmployeesModel.fromJson(e)).toList();
+        final List<EmployeeModel> companies = json.map((e) => EmployeeModel.fromJson(e)).toList();
         return Result.success(companies);
       } else{
 

@@ -3,7 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
 import 'package:teste_pratico_betalent/data/repositories/employees_repository.dart';
 import 'package:teste_pratico_betalent/data/services/employees_service.dart';
-import 'package:teste_pratico_betalent/domain/models/employees_model.dart';
+import 'package:teste_pratico_betalent/domain/models/employee_model.dart';
 import 'package:teste_pratico_betalent/utils/exceptions.dart';
 import 'package:teste_pratico_betalent/utils/result.dart';
 
@@ -17,13 +17,13 @@ void main() {
   setUp(() {
     mockService = MockEmployeesService();
     repository = EmployeesRepositoryImpl(employeesService: mockService);
-    provideDummy<Result<List<EmployeesModel>>>(Result.success([]));
+    provideDummy<Result<List<EmployeeModel>>>(Result.success([]));
   });
 
   group('EmployeesRepository Tests', () {
     test('should return a list of employees when the service returns success', () async {
       final employees = [
-        EmployeesModel(
+        EmployeeModel(
           id: '1',
           name: 'João',
           job: 'Back-end',
@@ -37,8 +37,8 @@ void main() {
 
       final result = await repository.getEmployees();
 
-      expect(result, isA<Success<List<EmployeesModel>>>());
-      expect((result as Success<List<EmployeesModel>>).value, employees);
+      expect(result, isA<Success<List<EmployeeModel>>>());
+      expect((result as Success<List<EmployeeModel>>).value, employees);
     });
 
     test('should return NotFoundException when service returns NotFoundException', () async {

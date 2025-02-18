@@ -1,4 +1,4 @@
-class EmployeesModel {
+class EmployeeModel {
   String? _id;
   String? _name;
   String? _job;
@@ -6,7 +6,7 @@ class EmployeesModel {
   String? _phone;
   String? _image;
 
-  EmployeesModel(
+  EmployeeModel(
       {String? id,
       String? name,
       String? job,
@@ -33,6 +33,31 @@ class EmployeesModel {
     }
   }
 
+  EmployeeModel.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _name = json['name'];
+    _job = json['job'];
+    _admissionDate = json['admission_date'];
+    _phone = json['phone'];
+    _image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
+    data['name'] = this._name;
+    data['job'] = this._job;
+    data['admission_date'] = this._admissionDate;
+    data['phone'] = this._phone;
+    data['image'] = this._image;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return 'EmployeeModel{_id: $_id, _name: $_name, _job: $_job, _admissionDate: $_admissionDate, _phone: $_phone, _image: $_image}';
+  }
+
   String? get id => _id;
 
   set id(String? id) => _id = id;
@@ -56,24 +81,4 @@ class EmployeesModel {
   String? get image => _image;
 
   set image(String? image) => _image = image;
-
-  EmployeesModel.fromJson(Map<String, dynamic> json) {
-    _id = json['id'];
-    _name = json['name'];
-    _job = json['job'];
-    _admissionDate = json['admission_date'];
-    _phone = json['phone'];
-    _image = json['image'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
-    data['name'] = this._name;
-    data['job'] = this._job;
-    data['admission_date'] = this._admissionDate;
-    data['phone'] = this._phone;
-    data['image'] = this._image;
-    return data;
-  }
 }

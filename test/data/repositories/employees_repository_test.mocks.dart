@@ -10,7 +10,7 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i4;
 import 'package:teste_pratico_betalent/data/services/employees_service.dart'
     as _i3;
-import 'package:teste_pratico_betalent/domain/models/employees_model.dart'
+import 'package:teste_pratico_betalent/domain/models/employee_model.dart'
     as _i7;
 import 'package:teste_pratico_betalent/utils/result.dart' as _i6;
 
@@ -80,15 +80,15 @@ class MockEmployeesService extends _i1.Mock implements _i3.EmployeesService {
           as String);
 
   @override
-  _i5.Future<_i6.Result<List<_i7.EmployeesModel>>> getEmployess() =>
+  _i5.Future<_i6.Result<List<_i7.EmployeeModel>>> getEmployess() =>
       (super.noSuchMethod(
             Invocation.method(#getEmployess, []),
-            returnValue: _i5.Future<_i6.Result<List<_i7.EmployeesModel>>>.value(
-              _i4.dummyValue<_i6.Result<List<_i7.EmployeesModel>>>(
+            returnValue: _i5.Future<_i6.Result<List<_i7.EmployeeModel>>>.value(
+              _i4.dummyValue<_i6.Result<List<_i7.EmployeeModel>>>(
                 this,
                 Invocation.method(#getEmployess, []),
               ),
             ),
           )
-          as _i5.Future<_i6.Result<List<_i7.EmployeesModel>>>);
+          as _i5.Future<_i6.Result<List<_i7.EmployeeModel>>>);
 }

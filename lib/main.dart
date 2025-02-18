@@ -3,6 +3,8 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'config/dependencies.dart';
+import 'ui/core/themes/theme.dart';
+import 'ui/features/employees/employess_screen.dart';
 
 void main() {
   Logger.root.level = Level.ALL;
@@ -22,9 +24,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BeTalent - Teste Prático',
       debugShowCheckedModeBanner: false,
-      home: Container(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light,
+      home: EmployeesScreen(),
     );
   }
 }
