@@ -5,7 +5,7 @@ abstract class ApiClient{
     String? host,
     int? port,
     Dio Function()? clientFactory,
-  }) : host = host ?? 'localhost',
+  }) : host = host ?? '192.168.0.189',
         port = port ?? 3000,
         clientFactory = clientFactory ?? (() => Dio());
 

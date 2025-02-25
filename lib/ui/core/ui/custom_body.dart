@@ -15,12 +15,10 @@ class _CustomBodyState extends State<CustomBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(Spacing.regular16),
-      child: SingleChildScrollView(
-        child: Column(
-          spacing: Spacing.little08,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: widget.children,
-        ),
+      child: Column(
+        spacing: Spacing.regular16,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: widget.children,
       ),
     );
   }

@@ -16,6 +16,8 @@ class EmployeesService extends ApiClient{
     final client = clientFactory();
     final url = '$baseUrl/employees';
 
+    _log.severe(url);
+
     try{
       Response response = await client.get(url);
       if(response.statusCode == 200){

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:teste_pratico_betalent/ui/features/employees/view_models/employees_viewmodel.dart';
 
 import '../../../core/themes/colors.dart';
 
 class SearchEmployees extends StatefulWidget {
-  const SearchEmployees({super.key});
+  const SearchEmployees({super.key, required this.viewModel});
+
+  final EmployeesViewModel viewModel;
 
   @override
   State<SearchEmployees> createState() => _SearchEmployeesState();
@@ -24,6 +27,7 @@ class _SearchEmployeesState extends State<SearchEmployees> {
           borderSide: BorderSide.none,
         ),
       ),
+      onChanged: widget.viewModel.searchEmployees,
     );
   }
 }
