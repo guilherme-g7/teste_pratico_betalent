@@ -1,5 +1,8 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+
 import '../../../core/themes/colors.dart';
 import '../../../core/themes/spacing.dart';
 import '../view_models/employees_viewmodel.dart';
@@ -14,90 +17,108 @@ class TableEmployees extends StatefulWidget {
 }
 
 class _TableEmployeesState extends State<TableEmployees> {
-  List<int> _expanded = [];
-
-  @override
-  void dispose() {
-    super.dispose();
-    _expanded.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: widget.viewModel,
-      builder: (context, _) {
-        return SizedBox(
-          width: double.maxFinite,
-          child: DataTable(
-            border: TableBorder(
-              horizontalInside: BorderSide(color: AppColors.grey3),
+    return Column(
+      children: [
+        ListTile(
+          tileColor: AppColors.blue2,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Spacing.little08),
+              topRight: Radius.circular(Spacing.little08),
             ),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.grey3),
-              borderRadius: BorderRadius.circular(Spacing.regular16),
-            ),
-            dividerThickness: 0,
-            dataRowMinHeight: Spacing.medium60,
-            dataRowMaxHeight: Spacing.medium60,
-            headingRowColor: WidgetStateProperty.all(AppColors.blue2),
-            columns: [
-              DataColumn(
-                columnWidth: FixedColumnWidth(Spacing.medium40),
-                headingRowAlignment: MainAxisAlignment.start,
-                label: Text('Foto',
-                    style: Theme.of(context).textTheme.headlineMedium),
+          ),
+          contentPadding: const EdgeInsets.only(
+              left: Spacing.little08, right: Spacing.regular28),
+          title: Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(Spacing.little08),
+                child:
+                    Text("Foto", style: TextStyle(fontWeight: FontWeight.bold)),
               ),
-              DataColumn(
-                headingRowAlignment: MainAxisAlignment.start,
-                label: Text('Nome',
-                    style: Theme.of(context).textTheme.headlineMedium),
-              ),
-              DataColumn(
-                headingRowAlignment: MainAxisAlignment.end,
-                label: Icon(
-                  Icons.circle,
-                  color: AppColors.black1,
-                  size: Spacing.little08,
-                ),
+              SizedBox(width: Spacing.little08),
+              const Padding(
+                padding: EdgeInsets.all(Spacing.little08),
+                child:
+                    Text("Nome", style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ],
-            rows: widget.viewModel.employees.map((employee) {
-              int index = widget.viewModel.employees.indexOf(employee);
-              return DataRow(
-                cells: <DataCell>[
-                  DataCell(
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(employee.image ?? ''),
-                      radius: 18,
-                    ),
-                  ),
-                  DataCell(Text(employee.name ?? '')),
-                  DataCell(
-                    onTap: () {
-                      setState(() {
-                        if (_expanded.contains(index)) {
-                          _expanded.remove(index);
-                        } else {
-                          _expanded.add(index);
-                        }
-                      });
-                    },
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Icon(_expanded.contains(index)
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }).toList(),
           ),
-        );
-      },
+          trailing: const Icon(Icons.circle, size: 12),
+        ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: widget.viewModel.employees.length,
+          itemBuilder: (context, index) {
+            final employee = widget.viewModel.employees[index];
+
+            return ExpansionTile(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(employee.image ?? ''),
+                radius: 18,
+              ),
+              title: Padding(
+                padding: const EdgeInsets.only(left: Spacing.little08),
+                child: Text(employee.name ?? ''),
+              ),
+              trailing: Icon(
+                Icons.keyboard_arrow_down,
+              ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(Spacing.little08),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildDetailRow("Cargo", employee.job ?? ''),
+                      _buildDetailRow(
+                          "Data de admissão",
+                          DateFormat('dd/MM/yyyy')
+                              .format(DateTime.parse(employee.admissionDate!))),
+                      _buildDetailRow(
+                          "Telefone", _formatPhone(employee.phone ?? '')),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) =>
+              const Divider(color: AppColors.grey3),
+        ),
+      ],
     );
+  }
+
+  Widget _buildDetailRow(String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Spacing.little04),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(value),
+        ],
+      ),
+    );
+  }
+
+  String _formatPhone(String? phone) {
+    String areaCode = '';
+    if (phone != null && phone.length == 13) {
+      areaCode = phone.substring(0, 2); // Store the area code
+      phone = phone.substring(2); // Remove the area code
+    }
+    if (phone != null && (phone.length == 10 || phone.length == 11)) {
+      return '+$areaCode ${UtilBrasilFields.obterTelefone(phone)}';
+    } else {
+      return 'Número inválido';
+    }
   }
 }

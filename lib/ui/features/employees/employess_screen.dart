@@ -48,7 +48,14 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
           children: [
             TitleEmployees(),
             SearchEmployees(viewModel: widget.viewModel),
-            TableEmployees(viewModel: widget.viewModel),
+            Container(
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.grey3),
+                borderRadius: BorderRadius.circular(Spacing.little08),
+              ),
+              child: TableEmployees(viewModel: widget.viewModel),
+            ),
           ],
         ),
       ),
