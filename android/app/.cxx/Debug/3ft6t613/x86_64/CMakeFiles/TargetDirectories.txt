@@ -1,0 +1,2 @@
+/home/guilherme/Documents/Testes/BeTalent/teste_pratico_betalent/android/app/.cxx/Debug/3ft6t613/x86_64/CMakeFiles/edit_cache.dir
+/home/guilherme/Documents/Testes/BeTalent/teste_pratico_betalent/android/app/.cxx/Debug/3ft6t613/x86_64/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,65 @@
+name: teste_pratico_betalent
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.2
+  logging: ^1.3.0
+  dio: ^5.8.0+1
+  go_router: ^14.8.0
+  logger: ^2.5.0
+  intl: ^0.20.2
+  brasil_fields: ^1.17.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.15
+  mockito: ^5.4.5
+  flutter_lints: ^5.0.0
+
+  flutter_native_splash: ^2.4.5
+  flutter_launcher_icons: ^0.14.3
+
+flutter_native_splash:
+  color: "#0500FF"
+  image: assets/images/splash.png
+  fullscreen: true
+  android: true
+  ios: true
+  android_12:
+    color: "#0500FF"
+    image: "assets/images/screen.png"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/splash.png"
+  adaptive_icon_background: "#0000FF"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/splash.png
+    - assets/images/screen.png
+
+  fonts:
+    - family: Helvetica
+      fonts:
+        - asset: assets/fonts/helvetica.ttf
+        - asset: assets/fonts/helvetica-medium.otf
+        - asset: assets/fonts/helvetica-bold.ttf
+        - asset: assets/fonts/helvetica-light.ttf
+          weight: 500
+
