@@ -19,80 +19,87 @@ class TableEmployees extends StatefulWidget {
 class _TableEmployeesState extends State<TableEmployees> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          tileColor: AppColors.blue2,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Spacing.little08),
-              topRight: Radius.circular(Spacing.little08),
+    return Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.grey3),
+        borderRadius: BorderRadius.circular(Spacing.little08),
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            tileColor: AppColors.blue2,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(Spacing.little08),
+                topRight: Radius.circular(Spacing.little08),
+              ),
             ),
-          ),
-          contentPadding: const EdgeInsets.only(
-              left: Spacing.little08, right: Spacing.regular28),
-          title: Row(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(Spacing.little08),
-                child:
-                    Text("Foto", style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
-              SizedBox(width: Spacing.little08),
-              const Padding(
-                padding: EdgeInsets.all(Spacing.little08),
-                child:
-                    Text("Nome", style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ),
-          trailing: const Icon(Icons.circle, size: 12),
-        ),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: widget.viewModel.employees.length,
-          itemBuilder: (context, index) {
-            final employee = widget.viewModel.employees[index];
-
-            return ExpansionTile(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
-              ),
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(employee.image ?? ''),
-                radius: 18,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(left: Spacing.little08),
-                child: Text(employee.name ?? ''),
-              ),
-              trailing: Icon(
-                Icons.keyboard_arrow_down,
-              ),
+            contentPadding: const EdgeInsets.only(
+                left: Spacing.little08, right: Spacing.regular28),
+            title: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(Spacing.little08),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDetailRow("Cargo", employee.job ?? ''),
-                      _buildDetailRow(
-                          "Data de admissão",
-                          DateFormat('dd/MM/yyyy')
-                              .format(DateTime.parse(employee.admissionDate!))),
-                      _buildDetailRow(
-                          "Telefone", _formatPhone(employee.phone ?? '')),
-                    ],
-                  ),
+                const Padding(
+                  padding: EdgeInsets.all(Spacing.little08),
+                  child:
+                      Text("Foto", style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                SizedBox(width: Spacing.little08),
+                const Padding(
+                  padding: EdgeInsets.all(Spacing.little08),
+                  child:
+                      Text("Nome", style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ],
-            );
-          },
-          separatorBuilder: (context, index) =>
-              const Divider(color: AppColors.grey3),
-        ),
-      ],
+            ),
+            trailing: const Icon(Icons.circle, size: 12),
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.viewModel.employees.length,
+            itemBuilder: (context, index) {
+              final employee = widget.viewModel.employees[index];
+
+              return ExpansionTile(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(employee.image ?? ''),
+                  radius: 18,
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(left: Spacing.little08),
+                  child: Text(employee.name ?? ''),
+                ),
+                trailing: Icon(
+                  Icons.keyboard_arrow_down,
+                ),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(Spacing.little08),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildDetailRow("Cargo", employee.job ?? ''),
+                        _buildDetailRow(
+                            "Data de admissão",
+                            DateFormat('dd/MM/yyyy')
+                                .format(DateTime.parse(employee.admissionDate!))),
+                        _buildDetailRow(
+                            "Telefone", _formatPhone(employee.phone ?? '')),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+            separatorBuilder: (context, index) =>
+                const Divider(color: AppColors.grey3),
+          ),
+        ],
+      ),
     );
   }
 

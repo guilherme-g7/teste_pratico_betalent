@@ -5,12 +5,14 @@ import 'package:teste_pratico_betalent/ui/features/employees/view_models/employe
 import '../../core/themes/colors.dart';
 import '../../core/themes/spacing.dart';
 import '../../core/ui/custom_app_bar.dart';
+import 'widgets/notfound_emplyees.dart';
 import 'widgets/search_employees.dart';
 import 'widgets/table_employees.dart';
 import 'widgets/title_employees.dart';
 
 class EmployeesScreen extends StatefulWidget {
   const EmployeesScreen({super.key, required this.viewModel});
+
   final EmployeesViewModel viewModel;
 
   @override
@@ -18,7 +20,6 @@ class EmployeesScreen extends StatefulWidget {
 }
 
 class _EmployeesScreenState extends State<EmployeesScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -48,14 +49,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
           children: [
             TitleEmployees(),
             SearchEmployees(viewModel: widget.viewModel),
-            Container(
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.grey3),
-                borderRadius: BorderRadius.circular(Spacing.little08),
-              ),
-              child: TableEmployees(viewModel: widget.viewModel),
-            ),
+            widget.viewModel.employees.isNotEmpty
+                ? TableEmployees(viewModel: widget.viewModel)
+                : const NotFoundEmployees(),
           ],
         ),
       ),
